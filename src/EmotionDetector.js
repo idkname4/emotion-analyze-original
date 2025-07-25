@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as faceapi from 'face-api.js';
 import songs from './songData';
+import AdBanner from "./AdBanner";
 
 const MODEL_URL = process.env.PUBLIC_URL + '/models';
 
@@ -140,10 +141,8 @@ const EmotionDetector = () => {
         }}
       >
         {/* Ad Banner - Bottom of Left Panel */}
-        <div style={{ width: '100%', margin: '16px 0', textAlign: 'center' }}>
-          <div style={{ background: '#f5f5f5', border: '1px dashed #bbb', borderRadius: 8, padding: 12, minHeight: 60 }}>
-            <span style={{ color: '#888', fontSize: 14 }}>Ad Banner Placeholder</span>
-          </div>
+        <div style={{ width: '100%', margin: '9px 0', textAlign: 'center' }}>
+          <AdBanner adSlot="7587599912" style={{ width: 234, height: 60 }} />
         </div>
         <h2 style={{ fontSize: '6vw', marginBottom: '2vw' }}>Emotion Analysis</h2>
         {loading && <p>Loading models...</p>}
@@ -244,9 +243,7 @@ const EmotionDetector = () => {
       >
         {/* Ad Banner - Top of Right Panel */}
         <div style={{ width: '100%', margin: '0 0 16px 0', textAlign: 'center' }}>
-          <div style={{ background: '#f5f5f5', border: '1px dashed #bbb', borderRadius: 8, padding: 12, minHeight: 60 }}>
-            <span style={{ color: '#888', fontSize: 14 }}>Ad Banner Placeholder</span>
-          </div>
+          <AdBanner adSlot="7587599912" style={{ width: 234, height: 60 }} />
         </div>
         <h3 style={{ textAlign: 'center', fontSize: window.innerWidth < 600 ? 18 : 24 }}>Recommended Songs</h3>
         {analyzed && emotion && recommendedSongs.length === 0 && (
