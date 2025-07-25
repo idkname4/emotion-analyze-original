@@ -242,7 +242,7 @@ const EmotionDetector = () => {
         }}
       >
         {/* Ad Banner - Top of Right Panel */}
-        <div style={{ width: '100%', margin: '0 0 16px 0', textAlign: 'center' }}>
+        <div style={{ width: '100%', margin: '0 0 9px 0', textAlign: 'center' }}>
           <AdBanner adSlot="7587599912" style={{ width: 234, height: 60 }} />
         </div>
         <h3 style={{ textAlign: 'center', fontSize: window.innerWidth < 600 ? 18 : 24 }}>Recommended Songs</h3>
