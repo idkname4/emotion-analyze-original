@@ -131,7 +131,7 @@ const EmotionDetector = () => {
         style={{
           flex: 3,
           minWidth: 280,
-          padding: '6vw 4vw',
+          padding: '5px 4vw',
           borderRight: '2px solid #eee',
           display: 'flex',
           flexDirection: 'column',
@@ -140,66 +140,96 @@ const EmotionDetector = () => {
           width: '100%',
         }}
       >
-        {/* Ad Banner - Bottom of Left Panel */}
-        <div style={{ width: '100%', margin: '9px 0', textAlign: 'center' }}>
-          <AdBanner adSlot="7587599912" style={{ width: 234, height: 60 }} />
-        </div>
+
         <h2 style={{ fontSize: '6vw', marginBottom: '2vw' }}>Emotion Analysis</h2>
         {loading && <p>Loading models...</p>}
         {!loading && modelsLoaded && <p style={{ color: 'green' }}>Models loaded. Ready!</p>}
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          width={window.innerWidth < 600 ? 220 : 360}
-          height={window.innerWidth < 600 ? 160 : 270}
-          style={{
-            borderRadius: '10px',
-            border: faceDetected ? '3px solid #4caf50' : '3px solid #f44336',
-            marginTop: 10,
-            maxWidth: '100%',
-            height: 'auto',
-          }}
-        />
-        <div style={{ marginTop: window.innerWidth < 600 ? 12 : 24, width: '100%', display: 'flex', justifyContent: 'center' }}>
-          <button
-            onClick={handleAnalyze}
-            disabled={loading || !modelsLoaded || analyzed}
-            style={{
-              fontSize: window.innerWidth < 600 ? 14 : 18,
-              padding: window.innerWidth < 600 ? '6px 12px' : '8px 24px',
-              marginRight: 16,
-              background: '#1976d2',
-              color: '#fff',
-              border: 'none',
-              borderRadius: 6,
-              cursor: (loading || !modelsLoaded || analyzed) ? 'not-allowed' : 'pointer',
-              opacity: analyzed ? 0.5 : 1,
-              minWidth: 80,
-              transition: 'opacity 0.2s',
-            }}
-          >
-            Analyze
-          </button>
-          <button
-            onClick={handleRetake}
-            disabled={loading || !modelsLoaded || !analyzed}
-            style={{
-              fontSize: window.innerWidth < 600 ? 14 : 18,
-              padding: window.innerWidth < 600 ? '6px 12px' : '8px 24px',
-              background: '#f44336',
-              color: '#fff',
-              border: 'none',
-              borderRadius: 6,
-              cursor: (loading || !modelsLoaded || !analyzed) ? 'not-allowed' : 'pointer',
-              opacity: !analyzed ? 0.5 : 1,
-              minWidth: 80,
-              transition: 'opacity 0.2s',
-            }}
-          >
-            Retake
-          </button>
+        
+        {/* Camera Container with Side Ads */}
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center', 
+          gap: '20px',
+          width: '100%',
+          marginTop: 10
+        }}>
+          {/* Left Side Ad */}
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center',
+            minWidth: '120px'
+          }}>
+            <AdBanner adSlot="7587599912" style={{ width: 120, height: 240 }} />
+          </div>
+          
+          {/* Camera Section */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <video
+              ref={videoRef}
+              autoPlay
+              muted
+              width={window.innerWidth < 600 ? 220 : 360}
+              height={window.innerWidth < 600 ? 160 : 270}
+              style={{
+                borderRadius: '10px',
+                border: faceDetected ? '3px solid #4caf50' : '3px solid #f44336',
+                maxWidth: '100%',
+                height: 'auto',
+              }}
+            />
+            <div style={{ marginTop: window.innerWidth < 600 ? 12 : 24, width: '100%', display: 'flex', justifyContent: 'center' }}>
+              <button
+                onClick={handleAnalyze}
+                disabled={loading || !modelsLoaded || analyzed}
+                style={{
+                  fontSize: window.innerWidth < 600 ? 14 : 18,
+                  padding: window.innerWidth < 600 ? '6px 12px' : '8px 24px',
+                  marginRight: 16,
+                  background: '#1976d2',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: 6,
+                  cursor: (loading || !modelsLoaded || analyzed) ? 'not-allowed' : 'pointer',
+                  opacity: analyzed ? 0.5 : 1,
+                  minWidth: 80,
+                  transition: 'opacity 0.2s',
+                }}
+              >
+                Analyze
+              </button>
+              <button
+                onClick={handleRetake}
+                disabled={loading || !modelsLoaded || !analyzed}
+                style={{
+                  fontSize: window.innerWidth < 600 ? 14 : 18,
+                  padding: window.innerWidth < 600 ? '6px 12px' : '8px 24px',
+                  background: '#f44336',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: 6,
+                  cursor: (loading || !modelsLoaded || !analyzed) ? 'not-allowed' : 'pointer',
+                  opacity: !analyzed ? 0.5 : 1,
+                  minWidth: 80,
+                  transition: 'opacity 0.2s',
+                }}
+              >
+                Retake
+              </button>
+            </div>
+          </div>
+          
+          {/* Right Side Ad */}
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center',
+            minWidth: '120px'
+          }}>
+            <AdBanner adSlot="7587599912" style={{ width: 120, height: 240 }} />
+          </div>
         </div>
         {/* Show captured photo and emotion after analysis */}
         {analyzed && (
@@ -215,8 +245,9 @@ const EmotionDetector = () => {
             </div>
           </div>
         )}
+        
         {/* Language Filter */}
-        <div style={{ marginTop: window.innerWidth < 600 ? 18 : 30, width: '100%' }}>
+        <div style={{ marginTop: window.innerWidth < 600 ? 30 : 50, width: '100%' }}>
           <label htmlFor="language-select" style={{ fontWeight: 'bold', marginRight: 8 }}>Language:</label>
           <select
             id="language-select"
@@ -228,6 +259,135 @@ const EmotionDetector = () => {
               <option key={lang} value={lang}>{lang}</option>
             ))}
           </select>
+        </div>
+
+        {/* Ad Banner - Middle Section */}
+        <div style={{ width: '100%', margin: '30px 0', textAlign: 'center' }}>
+          <AdBanner adSlot="7587599912" style={{ width: 234, height: 60 }} />
+        </div>
+
+        {/* Jokes Section */}
+        <div style={{ 
+          width: '100%', 
+          margin: '30px 0', 
+          padding: '20px', 
+          background: '#f8f9fa', 
+          borderRadius: '12px',
+          border: '2px solid #e9ecef'
+        }}>
+          <h3 style={{ 
+            textAlign: 'center', 
+            fontSize: window.innerWidth < 600 ? 18 : 22, 
+            color: '#1976d2',
+            marginBottom: '15px'
+          }}>
+            😄 Mood Booster Jokes
+          </h3>
+          
+          <div style={{ fontSize: window.innerWidth < 600 ? 14 : 16, lineHeight: '1.6' }}>
+            <div style={{ marginBottom: '15px', padding: '10px', background: 'white', borderRadius: '8px' }}>
+              <p style={{ margin: '0 0 5px 0', fontWeight: 'bold', color: '#333' }}>
+                Do you know what's the best thing about Switzerland?
+              </p>
+              <p style={{ margin: '0', color: '#666', fontStyle: 'italic' }}>
+                I don't know, but the flag is a big plus! 🇨🇭
+              </p>
+            </div>
+
+            <div style={{ marginBottom: '15px', padding: '10px', background: 'white', borderRadius: '8px' }}>
+              <p style={{ margin: '0 0 5px 0', fontWeight: 'bold', color: '#333' }}>
+                Why don't scientists trust atoms?
+              </p>
+              <p style={{ margin: '0', color: '#666', fontStyle: 'italic' }}>
+                Because they make up everything! ⚛️
+              </p>
+            </div>
+
+            <div style={{ marginBottom: '15px', padding: '10px', background: 'white', borderRadius: '8px' }}>
+              <p style={{ margin: '0 0 5px 0', fontWeight: 'bold', color: '#333' }}>
+                What do you call a fake noodle?
+              </p>
+              <p style={{ margin: '0', color: '#666', fontStyle: 'italic' }}>
+                An impasta! 🍝
+              </p>
+            </div>
+
+            <div style={{ marginBottom: '15px', padding: '10px', background: 'white', borderRadius: '8px' }}>
+              <p style={{ margin: '0 0 5px 0', fontWeight: 'bold', color: '#333' }}>
+                Why did the scarecrow win an award?
+              </p>
+              <p style={{ margin: '0', color: '#666', fontStyle: 'italic' }}>
+                Because he was outstanding in his field! 🌾
+              </p>
+            </div>
+
+            <div style={{ marginBottom: '15px', padding: '10px', background: 'white', borderRadius: '8px' }}>
+              <p style={{ margin: '0 0 5px 0', fontWeight: 'bold', color: '#333' }}>
+                What do you call a bear with no teeth?
+              </p>
+              <p style={{ margin: '0', color: '#666', fontStyle: 'italic' }}>
+                A gummy bear! 🧸
+              </p>
+            </div>
+
+            <div style={{ marginBottom: '15px', padding: '10px', background: 'white', borderRadius: '8px' }}>
+              <p style={{ margin: '0 0 5px 0', fontWeight: 'bold', color: '#333' }}>
+                Why don't eggs tell jokes?
+              </p>
+              <p style={{ margin: '0', color: '#666', fontStyle: 'italic' }}>
+                They'd crack each other up! 🥚
+              </p>
+            </div>
+
+            <div style={{ marginBottom: '15px', padding: '10px', background: 'white', borderRadius: '8px' }}>
+              <p style={{ margin: '0 0 5px 0', fontWeight: 'bold', color: '#333' }}>
+                What do you call a can opener that doesn't work?
+              </p>
+              <p style={{ margin: '0', color: '#666', fontStyle: 'italic' }}>
+                A can't opener! 🥫
+              </p>
+            </div>
+
+            <div style={{ marginBottom: '15px', padding: '10px', background: 'white', borderRadius: '8px' }}>
+              <p style={{ margin: '0 0 5px 0', fontWeight: 'bold', color: '#333' }}>
+                Why did the math book look so sad?
+              </p>
+              <p style={{ margin: '0', color: '#666', fontStyle: 'italic' }}>
+                Because it had too many problems! 📚
+              </p>
+            </div>
+
+            <div style={{ marginBottom: '15px', padding: '10px', background: 'white', borderRadius: '8px' }}>
+              <p style={{ margin: '0 0 5px 0', fontWeight: 'bold', color: '#333' }}>
+                What do you call a fish wearing a bowtie?
+              </p>
+              <p style={{ margin: '0', color: '#666', fontStyle: 'italic' }}>
+                So-fish-ticated! 🐟
+              </p>
+            </div>
+
+            <div style={{ marginBottom: '15px', padding: '10px', background: 'white', borderRadius: '8px' }}>
+              <p style={{ margin: '0 0 5px 0', fontWeight: 'bold', color: '#333' }}>
+                Why don't skeletons fight each other?
+              </p>
+              <p style={{ margin: '0', color: '#666', fontStyle: 'italic' }}>
+                They don't have the guts! 💀
+              </p>
+            </div>
+          </div>
+
+          <div style={{ 
+            textAlign: 'center', 
+            marginTop: '15px', 
+            padding: '10px', 
+            background: '#e3f2fd', 
+            borderRadius: '8px',
+            border: '1px solid #1976d2'
+          }}>
+            <p style={{ margin: '0', fontSize: '14px', color: '#1976d2' }}>
+              💡 <strong>Pro Tip:</strong> Laughter is the best medicine! These jokes are 100% dad-approved and Gen-Z tested.
+            </p>
+          </div>
         </div>
       </div>
       {/* Right Panel */}
