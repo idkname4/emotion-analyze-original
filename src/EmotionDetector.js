@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as faceapi from 'face-api.js';
 import songs from './songData';
-import AdBanner from "./AdBanner";
 
 const MODEL_URL = process.env.PUBLIC_URL + '/models';
 
@@ -146,91 +145,68 @@ const EmotionDetector = () => {
         {!loading && modelsLoaded && <p style={{ color: 'green' }}>Models loaded. Ready!</p>}
         {error && <p style={{ color: 'red' }}>{error}</p>}
         
-        {/* Camera Container with Side Ads */}
+        {/* Camera Container */}
         <div style={{ 
           display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'center', 
-          gap: '20px',
+          flexDirection: 'column', 
+          alignItems: 'center',
           width: '100%',
           marginTop: 10
         }}>
-          {/* Left Side Ad */}
-          <div style={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
-            alignItems: 'center',
-            minWidth: '120px'
-          }}>
-            <AdBanner adSlot="7587599912" style={{ width: 120, height: 240 }} />
-          </div>
-          
-          {/* Camera Section */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <video
-              ref={videoRef}
-              autoPlay
-              muted
-              width={window.innerWidth < 600 ? 220 : 360}
-              height={window.innerWidth < 600 ? 160 : 270}
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            width={window.innerWidth < 600 ? 220 : 360}
+            height={window.innerWidth < 600 ? 160 : 270}
+            style={{
+              borderRadius: '10px',
+              border: faceDetected ? '3px solid #4caf50' : '3px solid #f44336',
+              maxWidth: '100%',
+              height: 'auto',
+            }}
+          />
+          <div style={{ marginTop: window.innerWidth < 600 ? 12 : 24, width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <button
+              onClick={handleAnalyze}
+              disabled={loading || !modelsLoaded || analyzed}
               style={{
-                borderRadius: '10px',
-                border: faceDetected ? '3px solid #4caf50' : '3px solid #f44336',
-                maxWidth: '100%',
-                height: 'auto',
+                fontSize: window.innerWidth < 600 ? 14 : 18,
+                padding: window.innerWidth < 600 ? '6px 12px' : '8px 24px',
+                marginRight: 16,
+                background: '#1976d2',
+                color: '#fff',
+                border: 'none',
+                borderRadius: 6,
+                cursor: (loading || !modelsLoaded || analyzed) ? 'not-allowed' : 'pointer',
+                opacity: analyzed ? 0.5 : 1,
+                minWidth: 80,
+                transition: 'opacity 0.2s',
               }}
-            />
-            <div style={{ marginTop: window.innerWidth < 600 ? 12 : 24, width: '100%', display: 'flex', justifyContent: 'center' }}>
-              <button
-                onClick={handleAnalyze}
-                disabled={loading || !modelsLoaded || analyzed}
-                style={{
-                  fontSize: window.innerWidth < 600 ? 14 : 18,
-                  padding: window.innerWidth < 600 ? '6px 12px' : '8px 24px',
-                  marginRight: 16,
-                  background: '#1976d2',
-                  color: '#fff',
-                  border: 'none',
-                  borderRadius: 6,
-                  cursor: (loading || !modelsLoaded || analyzed) ? 'not-allowed' : 'pointer',
-                  opacity: analyzed ? 0.5 : 1,
-                  minWidth: 80,
-                  transition: 'opacity 0.2s',
-                }}
-              >
-                Analyze
-              </button>
-              <button
-                onClick={handleRetake}
-                disabled={loading || !modelsLoaded || !analyzed}
-                style={{
-                  fontSize: window.innerWidth < 600 ? 14 : 18,
-                  padding: window.innerWidth < 600 ? '6px 12px' : '8px 24px',
-                  background: '#f44336',
-                  color: '#fff',
-                  border: 'none',
-                  borderRadius: 6,
-                  cursor: (loading || !modelsLoaded || !analyzed) ? 'not-allowed' : 'pointer',
-                  opacity: !analyzed ? 0.5 : 1,
-                  minWidth: 80,
-                  transition: 'opacity 0.2s',
-                }}
-              >
-                Retake
-              </button>
-            </div>
-          </div>
-          
-          {/* Right Side Ad */}
-          <div style={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
-            alignItems: 'center',
-            minWidth: '120px'
-          }}>
-            <AdBanner adSlot="7587599912" style={{ width: 120, height: 240 }} />
+            >
+              Analyze
+            </button>
+            <button
+              onClick={handleRetake}
+              disabled={loading || !modelsLoaded || !analyzed}
+              style={{
+                fontSize: window.innerWidth < 600 ? 14 : 18,
+                padding: window.innerWidth < 600 ? '6px 12px' : '8px 24px',
+                background: '#f44336',
+                color: '#fff',
+                border: 'none',
+                borderRadius: 6,
+                cursor: (loading || !modelsLoaded || !analyzed) ? 'not-allowed' : 'pointer',
+                opacity: !analyzed ? 0.5 : 1,
+                minWidth: 80,
+                transition: 'opacity 0.2s',
+              }}
+            >
+              Retake
+            </button>
           </div>
         </div>
+        
         {/* Show captured photo and emotion after analysis */}
         {analyzed && (
           <div style={{ marginTop: window.innerWidth < 600 ? 18 : 32, textAlign: 'center', width: '100%' }}>
@@ -259,11 +235,6 @@ const EmotionDetector = () => {
               <option key={lang} value={lang}>{lang}</option>
             ))}
           </select>
-        </div>
-
-        {/* Ad Banner - Middle Section */}
-        <div style={{ width: '100%', margin: '30px 0', textAlign: 'center' }}>
-          <AdBanner adSlot="7587599912" style={{ width: 234, height: 60 }} />
         </div>
 
         {/* Jokes Section */}
@@ -401,10 +372,7 @@ const EmotionDetector = () => {
           boxSizing: 'border-box',
         }}
       >
-        {/* Ad Banner - Top of Right Panel */}
-        <div style={{ width: '100%', margin: '0 0 9px 0', textAlign: 'center' }}>
-          <AdBanner adSlot="7587599912" style={{ width: 234, height: 60 }} />
-        </div>
+        
         <h3 style={{ textAlign: 'center', fontSize: window.innerWidth < 600 ? 18 : 24 }}>Recommended Songs</h3>
         {analyzed && emotion && recommendedSongs.length === 0 && (
           <p>No songs found for this emotion and language.</p>
